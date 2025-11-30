@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Health Record - New Era University HealthData Portal</title>
+    <meta name="description" content="Secure health record management portal for New Era University students and staff. Submit health information, get healing tips, and locate nearby medical facilities.">
+    <meta name="keywords" content="health records, university health portal, New Era University, healing tips, medical facilities, hospital locator">
+    <meta name="author" content="New Era University">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph for social sharing -->
+    <meta property="og:title" content="Hospital Health Record - New Era University HealthData Portal">
+    <meta property="og:description" content="Manage your health records securely, receive personalized healing tips, and find nearby medical facilities.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.newerauniversity.edu/healthportal"> <!-- Replace with actual URL if hosted -->
+    <meta property="og:image" content="https://www.newerauniversity.edu/images/health-portal-logo.png"> <!-- Replace with actual image URL -->
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hospital Health Record - New Era University HealthData Portal">
+    <meta name="twitter:description" content="Secure health record management for students and staff. Get tips and locate care.">
+    <meta name="twitter:image" content="https://www.newerauniversity.edu/images/health-portal-logo.png"> <!-- Replace with actual image URL -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #f5f5f5; /* Fixed invalid 'Ash' color to a light gray */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            padding: 20px;
+        }
+        header {
+            background: #1976d2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.5em;
+            margin: -20px -20px 20px -20px;
+        }
+        header::before {
+            content: "🏥 ";
+            font-size: 1.2em;
+        }
+        .description {
+            text-align: center;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: #555;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea, button {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        button {
+            background: #1976d2;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #008000;
+        }
+        .remove-btn {
+            background: #f44336;
+            margin-top: 5px;
+        }
+        .remove-btn:hover {
+            background: #d32f2f;
+        }
+        .records {
+            margin-top: 20px;
+        }
+        .records h2 {
+            margin-bottom: 10px;
+        }
+        .record-item {
+            background: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 5px solid #1976d2;
+        }
+        .tips {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f5e8;
+            border-radius: 5px;
+            border-left: 5px solid #4caf50;
+        }
+        .tips h3 {
+            margin-top: 0;
+            color: #2e7d32;
+        }
+        .location-btn {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .location-btn:hover {
+            background: #e68900;
+        }
+        footer {
+            background: #1976d2;
+            color: White;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9em;
+            margin: 20px -20px -20px -20px;
+        }
+        .icon {
+            margin-right: 10px;
+        }
+        .password-section {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .password-section input {
+            width: 200px;
+            margin-right: 10px;
+        }
+        .records.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            HealthData Portal - New Era University
+        </header>
+        <div class="description">
+            This portal is designed for New Era University students and staff to manage their health records securely within the school environment. Submit your health information, receive general healing tips, and locate nearby medical facilities for quick access to care.
+        </div>
+        <form id="healthForm">
+            <label for="name"><span class="icon">👤</span>Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="contact"><span class="icon">📞</span>Contact Number:</label>
+            <input type="tel" id="contact" name="contact" placeholder="0912 345 6789 or +63 912 345 6789" pattern="(\+63\s?)?9\d{2}\s?\d{3}\s?\d{4}" title="Please enter a valid Philippine phone number (e.g., 09123456789 or +63 9123456789)" required>
+
+            <label for="age"><span class="icon">🎂</span>Age:</label>
+            <input type="number" id="age" name="age" required>
+
+            <label for="gender"><span class="icon">⚥</span>Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+
+            <label for="condition"><span class="icon">🩺</span>Condition:</label>
+            <input type="text" id="condition" name="condition" required>
+
+            <label for="date"><span class="icon">📅</span>Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="notes"><span class="icon">📝</span>Notes/Remarks:</label>
+            <textarea id="notes" name="notes" placeholder="Enter any additional notes or remarks..."></textarea>
+
+            <button type="submit">Submit Record</button>
+        </form>
+        <div id="tipsSection" class="tips" style="display: none;">
+            <h3>Healing Tips for Your Condition</h3>
+            <p id="tipsContent"></p>
+            <h4>Find Nearest Healthcare Location</h4>
+            <p>If you need immediate care, click below to find the nearest hospital or clinic based on your current location.</p>
+            <button id="locationBtn" class="location-btn">Find Nearest Hospital</button>
+        </div>
+        <div class="password-section">
+            <h3>View Saved Records</h3>
+            <input type="password" id="password" placeholder="Enter password">
+            <button id="viewRecordsBtn">View Records</button>
+        </div>
+        <div class="records hidden" id="recordsContainer">
+            <h2>All Saved Records</h2>
+            <div id="recordsList"></div>
+        </div>
+        <footer>
+            Confidential Medical Record - For Authorized Personnel Only
+        </footer>
+    </div>
+    <script>
+        // Auto-capitalize inputs
+        function capitalizeWords(str) {
+            return str.replace(/\b\w/g, l => l.toUpperCase());
+        }
+
+        document.getElementById('name').addEventListener('input', function() {
+            this.value = capitalizeWords(this.value);
+        });
+
+        document.getElementById('condition').addEventListener('input', function() {
+            this.value = capitalizeWords(this.value);
+        });
+
+        // Function to validate Philippine phone number
+        function validatePhilippineNumber(number) {
+            const philippineRegex = /^(\+63\s?)?9\d{2}\s?\d{3}\s?\d{4}$/;
+            return philippineRegex.test(number.replace(/\s/g, '')); // Remove spaces for validation
+        }
+
+        // Function to get healing tips based on condition, age, and gender
+        function getHealingTips(condition, age, gender) {
+            const lowerCondition = condition.toLowerCase();
+            let tips = "";
+            if (lowerCondition.includes('cold') || lowerCondition.includes('flu')) {
+                tips = "Rest plenty, drink fluids like water and herbal teas, eat nutritious foods, and use over-the-counter medications if needed. Consult a doctor if symptoms worsen.";
+                if (age > 65) tips += " For older adults, monitor for complications like pneumonia.";
+                if (gender === 'female' && age >= 12 && age <= 50) tips += " Women may experience menstrual irregularities; consult if needed.";
+            } else if (lowerCondition.includes('headache') || lowerCondition.includes('migraine')) {
+                tips = "Rest in a dark, quiet room, apply a cold or warm compress, stay hydrated, and consider relaxation techniques. Avoid triggers like bright lights or stress.";
+                if (age < 18) tips += " For children and teens, ensure adequate sleep and limit screen time.";
+                if (gender === 'female') tips += " Women may find relief with hormonal management if migraines are related to cycles.";
+            } else if (lowerCondition.includes('fever')) {
+                tips = "Stay hydrated, rest, dress lightly, and use fever-reducing medications like acetaminophen. Seek medical attention if fever is high or persistent.";
+                if (age < 5) tips += " Infants and young children should be monitored closely; seek immediate care for high fevers.";
+                if (gender === 'male' && age > 50) tips += " Men over 50 should watch for prostate-related issues if fever persists.";
+            } else if (lowerCondition.includes('cough')) {
+                tips = "Stay hydrated, use cough syrups or lozenges, avoid irritants like smoke, and rest your voice. If cough persists, see a doctor.";
+                if (age > 65) tips += " Elderly individuals may need to consult a doctor sooner to rule out serious conditions.";
+                if (gender === 'female' && lowerCondition.includes('chronic')) tips += " Women with chronic cough might consider hormonal factors.";
+            } else if (lowerCondition.includes('stomach') || lowerCondition.includes('nausea')) {
+                tips = "Eat bland foods like crackers or toast, stay hydrated with clear fluids, avoid fatty or spicy foods, and rest. Consult a doctor if vomiting continues.";
+                if (age < 12) tips += " Children may need pediatric evaluation for dehydration.";
+                if (gender === 'female' && age >= 18 && age <= 45) tips += " Women in reproductive age might check for pregnancy-related nausea.";
+            } else if (lowerCondition.includes('back pain')) {
+                tips = "Apply ice or heat, maintain good posture, do gentle stretches, and avoid heavy lifting. Over-the-counter pain relievers may help.";
+                if (age > 50) tips += " Older adults should consult a doctor to assess for arthritis or disc issues.";
+                if (gender === 'female') tips += " Women may experience back pain during pregnancy or menstruation; adjust activities accordingly.";
+            } else if (lowerCondition.includes('allergy')) {
+                tips = "Avoid allergens, use antihistamines, keep windows closed, and shower after being outdoors. Consult an allergist for severe reactions.";
+                if (age < 18) tips += " Children with allergies should have an action plan for severe reactions.";
+                if (gender === 'male') tips += " Men might experience different allergen sensitivities; track triggers.";
+            } else {
+                tips = "Please consult a healthcare professional for personalized advice. General tips: Stay hydrated, rest, eat balanced meals, and monitor your symptoms.";
+                if (age > 65) tips += " Seniors should seek prompt medical evaluation for any new symptoms.";
+                if (gender === 'female' && age >= 50) tips += " Women over 50 may need to consider menopause-related changes.";
+            }
+            return tips;
+        }
+
+        // Function to find nearest location
+        function findNearestLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    const mapsUrl = https://www.google.com/maps/search/hospital/@${lat},${lng},15z;
+                    window.open(mapsUrl, '_blank');
+                }, function(error) {
+                    alert('Unable to retrieve your location. Please enable location services and try again.');
+                });
+            } else {
+                alert('Geolocation is not supported by this browser.');
+            }
+        }
+
+        // Load and display saved records, filtering out those older than 24 hours
+        function loadRecords() {
+            const records = JSON.parse(localStorage.getItem('healthRecords') || '[]');
+            const now = new Date().getTime();
+            const oneDay = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+            const validRecords = records.filter(record => now - record.timestamp < oneDay);
+
+            // Update localStorage with only valid records
+            localStorage.setItem('healthRecords', JSON.stringify(validRecords));
+
+            const recordsList = document.getElementById('recordsList');
+            recordsList.innerHTML = '';
+            validRecords.forEach((record, index) => {
+                const recordDiv = document.createElement('div');
+                recordDiv.className = 'record-item';
+                recordDiv.innerHTML = `
+                    <strong>Name:</strong> ${record.name}<br>
+                    <strong>Contact Number:</strong> ${record.contact}<br>
+                    <strong>Age:</strong> ${record.age}<br>
+                    <strong>Gender:</strong> ${record.gender}<br>
+                    <strong>Condition:</strong> ${record.condition}<br>
+                    <strong>Date:</strong> ${record.date}<br>
+                    <strong>Notes/Remarks:</strong> ${record.notes || 'None'}<br>
+                    <em>Submitted: ${new Date(record.timestamp).toLocaleString()}</em><br>
+                    <button class="remove-btn" data-index="${index}">Remove Record</button>
+                `;
+                recordsList.appendChild(recordDiv);
+
+                // Add event listener to the remove button
+                const removeBtn = recordDiv.querySelector('.remove-btn');
+                removeBtn.addEventListener('click', function() {
+                    removeRecord(index);
+                });
+            });
+        }
+
+        // Function to remove a record
+        function removeRecord(index) {
+            const records = JSON.parse(localStorage.getItem('healthRecords') || '[]');
+            records.splice(index, 1); // Remove the record at the specified index
+            localStorage.setItem('healthRecords', JSON.stringify(records));
+            loadRecords(); // Reload the records list
+        }
+
+        // Save new record
+        document.getElementById('healthForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const contactNumber = document.getElementById('contact').value;
+            if (!validatePhilippineNumber(contactNumber)) {
+                alert('Please enter a valid Philippine phone number (e.g., 09123456789 or +63 9123456789).');
+                return;
+            }
+            const record = {
+                name: document.getElementById('name').value,
+                contact: contactNumber,
+                age: parseInt(document.getElementById('age').value),
+                gender: document.getElementById('gender').value,
+                condition: document.getElementById('condition').value,
+                date: document.getElementById('date').value,
+                notes: document.getElementById('notes').value,
+                timestamp: new Date().getTime()
+            };
+            const records = JSON.parse(localStorage.getItem('healthRecords') || '[]');
+            records.push(record);
+            localStorage.setItem('healthRecords', JSON.stringify(records));
+            loadRecords();
+            this.reset(); // Reset form after submission
+
+            // Display healing tips
+            const tipsSection = document.getElementById('tipsSection');
+            const tipsContent = document.getElementById('tipsContent');
+            tipsContent.textContent = getHealingTips(record.condition, record.age, record.gender);
+            tipsSection.style.display = 'block';
+
+            // Add event listener to location button
+            document.getElementById('locationBtn').addEventListener('click', findNearestLocation);
+        });
+
+        // Password protection for viewing records
+        const correctPassword = 'admin123'; // Change this to your desired password
+        document.getElementById('viewRecordsBtn').addEventListener('click', function() {
+            const enteredPassword = document.getElementById('password').value;
+            const recordsContainer = document.getElementById('recordsContainer');
+            if (enteredPassword === correctPassword) {
+                recordsContainer.classList.remove('hidden');
+                loadRecords(); // Load records only after password verification
+            } else {
+                alert('Incorrect password. Access denied.');
+                recordsContainer.classList.add('hidden');
+            }
+        });
+
+        // Load records on page load (but hidden)
+        // loadRecords(); // Commented out to keep hidden by default
+    </script>
+</body>
+</html>
